@@ -1,3 +1,3 @@
 bin_PROGRAMS = polish
-polish_SOURCES= src/main.cpp src/PolishClient.cpp src/PolishClient.hpp src/TcpClient.hpp src/TcpClient.cpp src/PolishObject.hpp src/RootConstructor/RootConstructor.hpp src/RootConstructor/RootConstructor.cpp=src/main.cpp src/PolishClient.cpp src/PolishClient.hpp src/TcpClient.hpp src/TcpClient.cpp src/PolishObject.hpp src/RootConstructor/RootConstructor.hpp src/RootConstructor/RootConstructor.cpp= = #src/main.cpp src/PolishClient.cpp src/TcpClient.cpp src/RootConstructor/RootConstructor.cpp
+polish_SOURCES= main.cpp PolishClient.cpp PolishClient.hpp TcpClient.hpp TcpClient.cpp PolishObject.hpp RootConstructor/RootConstructor.hpp RootConstructor/RootConstructor.cpp
 polish_LDADD = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network

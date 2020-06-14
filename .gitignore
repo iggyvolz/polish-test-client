@@ -83,4 +83,4 @@ Makefile
 *.app
 
 /src/polish
-/config.h
+/config.hMakefile.am
