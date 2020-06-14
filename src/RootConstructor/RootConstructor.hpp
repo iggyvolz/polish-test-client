@@ -1,4 +1,4 @@
-#include "PolishObject.hpp"
+#include "../PolishObject.hpp"
 #include <unordered_map>
 class RootConstructor: public PolishObject
 {

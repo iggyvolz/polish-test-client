@@ -82,5 +82,6 @@ Makefile
 *.out
 *.app
 
-/src/polish
-/config.hMakefile.am
+/polish
+/config.h
+/Makefile.am

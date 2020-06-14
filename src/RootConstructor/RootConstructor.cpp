@@ -1,7 +1,7 @@
 #include<iostream>
 #include "RootConstructor.hpp"
-#include "TcpClient.hpp"
-#include "PolishClient.hpp"
+#include "../TcpClient.hpp"
+#include "../PolishClient.hpp"
 void RootConstructor::Process(PolishClient* client)
 {
     char id[32];
