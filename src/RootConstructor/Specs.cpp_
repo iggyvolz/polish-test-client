@@ -1,7 +1,0 @@
-#include "PolishClient.hpp"
-#include <unordered_map>
-#include<string>
-void RootConstructor(const TcpClient*);
-const std::unordered_map<std::string, void(*)(const TcpClient*)> PolishClient::functions = {
-	{std::string({19,106,-100,-29,107,-22,64,106,113,-100,-93,74,-107,-16,11,110,103,50,109,127,1,-13,45,41,7,36,34,-4,117,-16,88,-101}, 32), RootConstructor}
-};

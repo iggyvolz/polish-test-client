@@ -85,3 +85,4 @@ Makefile
 /polish
 /config.h
 /Makefile.am
+/src/RootConstructor/Constructor.cpp
