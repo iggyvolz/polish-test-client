@@ -15,7 +15,6 @@ Suspendable TcpClient::Read(char* output, std::size_t length)
 {
     std::size_t received;
     sf::Socket::Status status;
-    std::cout << "Want to read " << length << std::endl;
     do
     {
         received = 0;

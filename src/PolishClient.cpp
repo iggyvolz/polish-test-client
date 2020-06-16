@@ -21,11 +21,12 @@ Suspendable PolishClient::polishLoop()
     while(1)
     {
         // Read object number
-        uint64_t id;
+        uint64_t id=-1;
         WAIT_FOR(tcp->Read<uint64_t>(&id));
         if(objects.size() <= id) {
             std::cout << "Attempted to call on undefined object #" << id << std::endl;
         } else {
+            std::cout << "Call on object " << id << std::endl;
             WAIT_FOR(objects[id]->Process(this));
         }
     }
@@ -38,8 +39,6 @@ void PolishClient::Run()
         {
             if(it->done()) {
                 // Remove it from array
-                std::cout << "REMOVAL" << std::endl;
-                std::exit(1);
                 callbacks.erase(it);
                 break;
             } else {

@@ -10,6 +10,7 @@ Suspendable WindowFactory::Process(PolishClient* polish)
     WAIT_FOR(polish->tcp->Read<uint32_t>(&height));
     WAIT_FOR(polish->tcp->Read<uint32_t>(&x));
     WAIT_FOR(polish->tcp->Read<uint32_t>(&y));
+    std::cout << "Making a window with width " << width << ", height " << height << ", x " << x << ", y " << y << std::endl;
     windows.push_back(new Window(polish, width, height, x, y));
 }
 PolishObject* WindowFactory::create(PolishClient* polish)

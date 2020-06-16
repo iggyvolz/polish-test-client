@@ -16,11 +16,10 @@ class TcpClient
         const sf::IpAddress &remoteAddress;
         unsigned short remotePort;
 };
-
 template<typename T>
 Suspendable TcpClient::Read(T* output)
 {
-    WAIT_FOR(Read((char*)&output, sizeof(T)));
+    WAIT_FOR(Read((char*)output, sizeof(T)));
 }
 
 template<typename T>
