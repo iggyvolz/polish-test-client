@@ -1,7 +1,9 @@
 #include "Window.hpp"
 #include <SFML/Graphics.hpp>
-void Window::Process(PolishClient* polish)
+#include <SFML/System.hpp>
+Suspendable Window::Process(PolishClient* polish)
 {
+    NOSUSPEND(); 
 }
 
 PolishObjectTypes Window::GetType()
@@ -33,10 +35,12 @@ Window::Window(PolishClient* polish, unsigned width, unsigned height, unsigned x
     window = new sf::RenderWindow(sf::VideoMode(width, height), "SFML works!");
     window->setPosition(sf::Vector2i(x,y));
     window->setActive(false);
-    thread = std::thread(&Window::Run, this);
+    thread = new sf::Thread(&Window::Run, this);
+    thread->launch();
 }
 
 Window::~Window()
 {
     delete window;
+    delete thread;
 }

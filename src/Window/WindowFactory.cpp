@@ -2,13 +2,14 @@
 #include "Window.hpp"
 #include<iostream>
 #include "../PolishClient.hpp"
-void WindowFactory::Process(PolishClient* polish)
+Suspendable WindowFactory::Process(PolishClient* polish)
 {
     std::cout << "Instantiating a window" << std::endl;
-    uint32_t width = polish->tcp->Read<uint32_t>();
-    uint32_t height = polish->tcp->Read<uint32_t>();
-    uint32_t x = polish->tcp->Read<uint32_t>();
-    uint32_t y = polish->tcp->Read<uint32_t>();
+    uint32_t width, height, x, y;
+    WAIT_FOR(polish->tcp->Read<uint32_t>(&width));
+    WAIT_FOR(polish->tcp->Read<uint32_t>(&height));
+    WAIT_FOR(polish->tcp->Read<uint32_t>(&x));
+    WAIT_FOR(polish->tcp->Read<uint32_t>(&y));
     windows.push_back(new Window(polish, width, height, x, y));
 }
 PolishObject* WindowFactory::create(PolishClient* polish)

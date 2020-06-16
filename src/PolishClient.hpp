@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Network.hpp>
 #include "TcpClient.hpp"
-#include <unordered_map>
+#include <vector>
 #include <string>
 class PolishObject;
 class RootConstructor;
@@ -12,8 +12,10 @@ class PolishClient
         void Run();
         ~PolishClient();
         TcpClient* tcp;
-        // static const std::unordered_map<std::string, void(*)(const TcpClient*)> functions;
         std::vector<PolishObject*> objects;
+    private:
+        std::vector<Suspendable> callbacks;
+        Suspendable polishLoop();
 };
 
 // const std::unordered_map<std::string, void(*)(const TcpClient*)> PolishClient::functions = {

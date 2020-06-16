@@ -7,7 +7,7 @@ class RootConstructor: public PolishObject
         static const std::unordered_map<std::string, PolishObject*(*)(PolishClient*)> constructors;
 
     public:
-        virtual void Process(PolishClient* polish);
+        virtual Suspendable Process(PolishClient* polish);
         RootConstructor();
         static PolishObject* testFn();
         virtual PolishObjectTypes GetType();

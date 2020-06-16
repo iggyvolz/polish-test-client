@@ -1,4 +1,5 @@
 #pragma once
+#include "Suspendable.hpp"
 class TcpClient;
 class PolishClient;
 enum PolishObjectTypes
@@ -10,6 +11,6 @@ enum PolishObjectTypes
 class PolishObject
 {
     public:
-        virtual void Process(PolishClient* polish)=0;
+        virtual Suspendable Process(PolishClient* polish)=0;
         virtual PolishObjectTypes GetType()=0;
 };

@@ -6,7 +6,7 @@ class Window;
 class WindowFactory: public PolishObject
 {
     public:
-        void Process(PolishClient* polish);
+        Suspendable Process(PolishClient* polish);
         static PolishObject* create(PolishClient* polish);
         ~WindowFactory();
         virtual PolishObjectTypes GetType();

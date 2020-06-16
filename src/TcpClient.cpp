@@ -9,14 +9,46 @@ TcpClient::TcpClient(const sf::IpAddress &remoteAddress, unsigned short remotePo
     {
         throw std::runtime_error("Could not connect to TCP");
     }
+    socket.setBlocking(false);
 }
-void TcpClient::Read(char* output, std::size_t length)
+Suspendable TcpClient::Read(char* output, std::size_t length)
 {
     std::size_t received;
-    sf::Socket::Status status = socket.receive(output, length, received);
-    if(status != sf::Socket::Status::Done)
+    sf::Socket::Status status;
+    std::cout << "Want to read " << length << std::endl;
+    do
     {
-        std::cout << "ERROR" << std::endl;
+        received = 0;
+        status = socket.receive(output, length, received);
+        switch(status) {
+            case sf::Socket::Status::Disconnected:
+                std::cout << "Got disconnected" << std::endl;
+                break;
+                throw std::runtime_error("Got disconnected");
+            case sf::Socket::Status::Error:
+                throw std::runtime_error("Got TCP error");
+            case sf::Socket::Status::NotReady:
+                break;
+            case sf::Socket::Status::Done:
+                break;
+            default:
+                throw std::runtime_error("Unknown socket error");
+        }
+        if(received != 0) std::cout << "Read " << received << std::endl;
+        output += received; // Advance pointer by received bytes
+        length -= received; // Remove needed bytes from length
+        SUSPEND();
+    } while(received != length);
+    std::cout << "Done reading" << std::endl;
+}
+Suspendable TcpClient::Write(const char* data, std::size_t length)
+{
+    sf::Packet packet;
+    packet.append(data, length);
+    sf::Socket::Status status;
+    do
+    {
+        socket.send(packet);
         switch(status) {
             case sf::Socket::Status::Disconnected:
                 throw std::runtime_error("Got disconnected");
@@ -24,31 +56,13 @@ void TcpClient::Read(char* output, std::size_t length)
                 throw std::runtime_error("Got TCP error");
             case sf::Socket::Status::NotReady:
                 throw std::runtime_error("TCP was not ready");
+            case sf::Socket::Status::Done:
+                break;
             case sf::Socket::Status::Partial:
-                throw std::runtime_error("Got partial");
+                SUSPEND();
+                break;
             default:
                 throw std::runtime_error("Unknown socket error");
         }
-    }
-    if(received != length)
-    {
-        std::size_t needed = length - received;
-        Read(output+received, needed);
-    }
+    } while (status == sf::Socket::Status::Partial);
 }
-void TcpClient::Write(const char* data, std::size_t length)
-{
-    socket.send(data, length);
-}
-/*
-char data[100];
-std::size_t received;
-while(1) {
-    received=0;
-    memset(data, 0, 100*sizeof(char));
-
-    socket.receive(data, 100, received);
-    std::cout << "Data length: " << received << std::endl;
-    std::cout << "Received: '" << data << "'" << std::endl;
-}
-*/

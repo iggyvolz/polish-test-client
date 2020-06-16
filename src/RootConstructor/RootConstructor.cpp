@@ -9,10 +9,10 @@ void hexprint(const char* c, int len)
         printf("%02x", (unsigned int)(unsigned char)(c[i]));
     }
 }
-void RootConstructor::Process(PolishClient* client)
+Suspendable RootConstructor::Process(PolishClient* client)
 {
     char id[32];
-    client->tcp->Read(id, 32);
+    WAIT_FOR(client->tcp->Read(id, 32));
     try {
         client->objects.push_back(constructors.at(std::string(id, 32))(client));
     } catch(const std::out_of_range& err)
