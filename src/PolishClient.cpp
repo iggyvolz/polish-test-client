@@ -35,16 +35,21 @@ void PolishClient::Run()
 {
     while(1)
     {
-        for(auto it=callbacks.begin(); it != callbacks.end(); )
+        for(auto it=callbacks.begin(); it != callbacks.end(); it++)
         {
-            if(it->done()) {
-                // Remove it from array
-                callbacks.erase(it);
-                break;
-            } else {
-                it->resume();
-                it++;
-            }
+            if(!it->done()) it->resume();
         }
+        // Add new callbacks as needed
+        for(auto it=pendingCallbacks.begin(); it != pendingCallbacks.end(); it++)
+        {
+            callbacks.push_back(*it);
+        }
+        pendingCallbacks.clear();
+        // TODO cleanup done callbacks
     }
+}
+
+void PolishClient::AddCallback(const Suspendable& suspendable)
+{
+    pendingCallbacks.push_back(suspendable);
 }

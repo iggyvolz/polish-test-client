@@ -9,7 +9,6 @@
 
 struct Suspendable {
     struct promise_type {
-        int id;
         promise_type() {
         }
         ~promise_type() {
@@ -58,6 +57,14 @@ struct Suspendable {
         coro = other.coro;
     }
     Suspendable(const Suspendable& other)
+    {
+        coro = other.coro;
+    }
+    Suspendable(const Suspendable&& other)
+    {
+        coro = other.coro;
+    }
+    void operator=(const Suspendable&& other)
     {
         coro = other.coro;
     }

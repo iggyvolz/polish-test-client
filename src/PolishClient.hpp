@@ -13,8 +13,10 @@ class PolishClient
         ~PolishClient();
         TcpClient* tcp;
         std::vector<PolishObject*> objects;
+        void AddCallback(const Suspendable& suspendable);
     private:
         std::vector<Suspendable> callbacks;
+        std::vector<Suspendable> pendingCallbacks;
         Suspendable polishLoop();
 };
 

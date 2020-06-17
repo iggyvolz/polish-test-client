@@ -10,7 +10,7 @@ class Window: public PolishObject
         virtual Suspendable Process(PolishClient* polish);
         virtual PolishObjectTypes GetType();
         ~Window();
-        void Run();
+        Suspendable Run();
     private:
         Window(PolishClient* polish, unsigned width, unsigned height, unsigned x, unsigned y);
         friend Suspendable WindowFactory::Process(PolishClient* polish);
