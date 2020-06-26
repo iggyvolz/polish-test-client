@@ -4,14 +4,13 @@
 class Socket
 {
     public:
-        Socket(const char* filename);
+        Socket(const std::string filename);
         template<typename T>
         Suspendable Read(T*);
         template<typename T>
         Suspendable Write(const T data);
         Suspendable Read(char* output, std::size_t length);
         Suspendable Write(const char* data, std::size_t length);
-        ~Socket();
     private:
         std::string filename;
 };

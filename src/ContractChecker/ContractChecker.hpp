@@ -1,6 +1,7 @@
 #pragma once
 #include "../PolishObject.hpp"
 #include <unordered_set>
+#include "../PolishClient.hpp"
 class ContractChecker: public PolishObject
 {
     private:

@@ -43,5 +43,6 @@ Suspendable Socket::Write(const char* data, std::size_t length)
         }
         data += written;
         length -= written;
+        SUSPEND();
     }
 }

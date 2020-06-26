@@ -1,5 +1,6 @@
 #pragma once
 #include "../PolishObject.hpp"
+#include "../PolishClient.hpp"
 #include <unordered_map>
 class RootConstructor: public PolishObject
 {

@@ -11,7 +11,7 @@ class PolishClient
         PolishClient(const std::string filename);
         void Run();
         ~PolishClient();
-        Socket* sock;
+        Socket* socket;
         std::vector<PolishObject*> objects;
         void AddCallback(const Suspendable& suspendable);
     private:

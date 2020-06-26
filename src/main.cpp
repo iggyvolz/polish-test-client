@@ -1,7 +1,7 @@
 #include "PolishClient.hpp"
 int main()
 {
-    PolishClient client("127.0.0.1", 53000);
+    PolishClient client("/tmp/sock");
     client.Run();
     return 0;
 }

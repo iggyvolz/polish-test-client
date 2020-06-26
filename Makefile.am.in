@@ -1,5 +1,5 @@
 bin_PROGRAMS = polish
-polish_LDADD = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+polish_LDADD = -lsfml-graphics -lsfml-window -lsfml-system
 polish_LDFLAGS = -fcoroutines
 polish_CPPFLAGS = -fcoroutines
 dist_doc_DATA = README
