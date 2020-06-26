@@ -1,29 +1,28 @@
 #pragma once
-#include <SFML/Network.hpp>
 #include "Suspendable.hpp"
-class TcpClient
+#include <sys/socket.h>
+class Socket
 {
     public:
-        TcpClient(const sf::IpAddress &remoteAddress, unsigned short remotePort);
+        Socket(const char* filename);
         template<typename T>
         Suspendable Read(T*);
         template<typename T>
         Suspendable Write(const T data);
         Suspendable Read(char* output, std::size_t length);
         Suspendable Write(const char* data, std::size_t length);
+        ~Socket();
     private:
-        sf::TcpSocket socket;
-        const sf::IpAddress &remoteAddress;
-        unsigned short remotePort;
+        std::string filename;
 };
 template<typename T>
-Suspendable TcpClient::Read(T* output)
+Suspendable Socket::Read(T* output)
 {
     WAIT_FOR(Read((char*)output, sizeof(T)));
 }
 
 template<typename T>
-Suspendable TcpClient::Write(const T data)
+Suspendable Socket::Write(const T data)
 {
     WAIT_FOR(Write((const char*)&data, sizeof(T)));
 }

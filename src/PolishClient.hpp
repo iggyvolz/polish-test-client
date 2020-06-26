@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Network.hpp>
-#include "TcpClient.hpp"
+#include "Socket.hpp"
 #include <vector>
 #include <string>
 class PolishObject;
@@ -8,10 +8,10 @@ class RootConstructor;
 class PolishClient
 {
     public:
-        PolishClient(const sf::IpAddress &remoteAddress, unsigned short remotePort);
+        PolishClient(const std::string filename);
         void Run();
         ~PolishClient();
-        TcpClient* tcp;
+        Socket* sock;
         std::vector<PolishObject*> objects;
         void AddCallback(const Suspendable& suspendable);
     private:
@@ -19,7 +19,3 @@ class PolishClient
         std::vector<Suspendable> pendingCallbacks;
         Suspendable polishLoop();
 };
-
-// const std::unordered_map<std::string, void(*)(const TcpClient*)> PolishClient::functions = {
-//     {{1,2,3}, PolishClient::testFn}
-// };

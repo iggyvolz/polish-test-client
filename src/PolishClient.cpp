@@ -5,15 +5,15 @@
 #include<iostream>
 #include "RootConstructor/RootConstructor.hpp"
 class PolishObject;
-PolishClient::PolishClient(const sf::IpAddress &remoteAddress, unsigned short remotePort)
+PolishClient::PolishClient(const std::string filename)
 {
-    tcp = new TcpClient(remoteAddress, remotePort);
-    objects.push_back(new RootConstructor());
+    socket = new Socket(filename);
+    objects.push_back(new RootConstructor(this));
     callbacks.push_back(this->polishLoop());
 }
 PolishClient::~PolishClient()
 {
-    delete tcp;
+    delete socket;
 }
 Suspendable PolishClient::polishLoop()
 {
@@ -22,12 +22,13 @@ Suspendable PolishClient::polishLoop()
     {
         // Read object number
         uint64_t id=-1;
-        WAIT_FOR(tcp->Read<uint64_t>(&id));
+        WAIT_FOR(socket->Read<uint64_t>(&id));
         if(objects.size() <= id) {
             std::cout << "Attempted to call on undefined object #" << id << std::endl;
+            std::exit(-1);
         } else {
-            std::cout << "Call on object " << id << std::endl;
-            WAIT_FOR(objects[id]->Process(this));
+            // std::cout << "Call on object " << id << std::endl;
+            WAIT_FOR(objects[id]->Process());
         }
     }
 }

@@ -2,9 +2,36 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include "../PolishClient.hpp"
-Suspendable Window::Process(PolishClient* polish)
+Suspendable Window::Process()
 {
-    NOSUSPEND(); 
+    uint64_t method;
+    WAIT_FOR(polish->socket->Read(&method));
+    if(method == 0) {
+        WAIT_FOR(this->SetTitle());
+    } else if(method == 1) {
+        WAIT_FOR(this->SetPosition());
+    } else {
+            std::cout << "Unknown method #" << method << " on Window" << std::endl;
+            std::exit(1);
+    }
+}
+
+Suspendable Window::SetTitle()
+{
+    char titleLength;
+    WAIT_FOR(polish->socket->Read(&titleLength));
+    char* title = (char*)malloc(sizeof(char)*titleLength);
+    WAIT_FOR(polish->socket->Read(title, titleLength));
+    window->setTitle(title);
+}
+
+Suspendable Window::SetPosition()
+{
+    uint32_t x, y;
+    WAIT_FOR(polish->socket->Read(&x));
+    WAIT_FOR(polish->socket->Read(&y));
+    window->setPosition(sf::Vector2i(x,y));
+
 }
 
 PolishObjectTypes Window::GetType()
@@ -13,7 +40,6 @@ PolishObjectTypes Window::GetType()
 }
 Suspendable Window::Run()
 {
-    window->setActive(true);
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
@@ -32,11 +58,9 @@ Suspendable Window::Run()
         SUSPEND();
     }
 }
-Window::Window(PolishClient* polish, unsigned width, unsigned height, unsigned x, unsigned y)
+Window::Window(PolishClient* polish, unsigned width, unsigned height, uint64_t id):polish(polish), id(id)
 {
     window = new sf::RenderWindow(sf::VideoMode(width, height), "SFML works!");
-    window->setPosition(sf::Vector2i(x,y));
-    window->setActive(false);
     polish->AddCallback(this->Run());
 }
 

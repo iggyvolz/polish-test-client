@@ -1,6 +1,6 @@
 #include<iostream>
 #include "RootConstructor.hpp"
-#include "../TcpClient.hpp"
+#include "../Socket.hpp"
 #include "../PolishClient.hpp"
 void hexprint(const char* c, int len)
 {
@@ -9,12 +9,12 @@ void hexprint(const char* c, int len)
         printf("%02x", (unsigned int)(unsigned char)(c[i]));
     }
 }
-Suspendable RootConstructor::Process(PolishClient* client)
+Suspendable RootConstructor::Process()
 {
     char id[32];
-    WAIT_FOR(client->tcp->Read(id, 32));
+    WAIT_FOR(polish->socket->Read(id, 32));
     try {
-        client->objects.push_back(constructors.at(std::string(id, 32))(client));
+        polish->objects.push_back(constructors.at(std::string(id, 32))(polish, polish->objects.size()));
     } catch(const std::out_of_range& err)
     {
         std::cout << "Attempted to initialize object with unknown ID '";
@@ -29,14 +29,9 @@ Suspendable RootConstructor::Process(PolishClient* client)
         }
     }
 }
-RootConstructor::RootConstructor()
+RootConstructor::RootConstructor(PolishClient* polish):polish(polish)
 {
 
-}
-PolishObject* RootConstructor::testFn()
-{
-    std::cout << "Running testFn" << std::endl;
-    return (PolishObject*)0;
 }
 PolishObjectTypes RootConstructor::GetType()
 {

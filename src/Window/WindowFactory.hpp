@@ -6,12 +6,13 @@ class Window;
 class WindowFactory: public PolishObject
 {
     public:
-        Suspendable Process(PolishClient* polish);
-        static PolishObject* create(PolishClient* polish);
+        Suspendable Process();
+        static PolishObject* create(PolishClient* polish, uint64_t id);
         ~WindowFactory();
         virtual PolishObjectTypes GetType();
     private:
-        WindowFactory(PolishClient* polish);
+        WindowFactory(PolishClient* polish, uint64_t id);
         PolishClient* polish;
+        uint64_t id;
         std::vector<Window*> windows;
 };

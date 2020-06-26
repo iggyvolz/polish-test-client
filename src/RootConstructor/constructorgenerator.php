@@ -37,7 +37,7 @@ foreach($files as $file)
 }
 ?>
 
-const std::unordered_map<std::string, PolishObject*(*)(PolishClient*)> RootConstructor::constructors = {
+const std::unordered_map<std::string, PolishObject*(*)(PolishClient*,uint64_t)> RootConstructor::constructors = {
 <?php
 foreach($hashes as $i => $hash)
 {
