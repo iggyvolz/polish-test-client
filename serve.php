@@ -1,5 +1,8 @@
 <?php
 // Quick test server
+if(!file_exists("/tmp/sock")) {
+    posix_mkfifo("/tmp/sock", 0666);
+}
 $conn = fopen("/tmp/sock", "r+");
 // $0:Root Constructor
 // $0(Window Factory)
