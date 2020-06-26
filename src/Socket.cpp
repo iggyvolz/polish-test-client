@@ -19,7 +19,12 @@ Suspendable Socket::Read(char* output, std::size_t length)
         std::size_t received = read(fd, output, length);
         close(fd);
         if(received == -1) {
-            throw std::runtime_error("Error while reading data");
+            if(errno == EAGAIN) {
+                // this is okay
+                received = 0;
+            } else {
+                throw std::runtime_error("Error " + std::to_string(errno) + " while reading data");
+            }
         }
         // if(received != 0) std::cout << "Read " << received << std::endl;
         output += received; // Advance pointer by received bytes
@@ -39,7 +44,12 @@ Suspendable Socket::Write(const char* data, std::size_t length)
         std::size_t written = write(fd, data, length);
         close(fd);
         if(written == -1) {
-            throw std::runtime_error("Error while writing data");
+            if(errno == EAGAIN) {
+                // this is okay
+                written = 0;
+            } else {
+                throw std::runtime_error("Error " + std::to_string(errno) + " while writing data");
+            }
         }
         data += written;
         length -= written;
