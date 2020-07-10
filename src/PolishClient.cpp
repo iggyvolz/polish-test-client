@@ -3,12 +3,12 @@
 #include <stdexcept>
 #include <string.h>
 #include<iostream>
-#include "RootConstructor/RootConstructor.hpp"
+#include "Root/Root.hpp"
 class PolishObject;
 PolishClient::PolishClient(const std::string filename)
 {
     socket = new Socket(filename);
-    objects.push_back(new RootConstructor(this));
+    objects.push_back(new Root(this, 0));
     callbacks.push_back(this->polishLoop());
 }
 PolishClient::~PolishClient()
@@ -27,7 +27,7 @@ Suspendable PolishClient::polishLoop()
             std::cout << "Attempted to call on undefined object #" << id << std::endl;
             std::exit(-1);
         } else {
-            // std::cout << "Call on object " << id << std::endl;
+            std::cout << "Call on object " << id << std::endl;
             WAIT_FOR(objects[id]->Process());
         }
     }

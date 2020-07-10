@@ -15,10 +15,8 @@ class Window: public PolishObject
     private:
         Window(PolishClient* polish, unsigned width, unsigned height, uint64_t id);
         friend Suspendable WindowFactory::Process();
-        PolishClient* polish;
         sf::Thread* thread;
         sf::RenderWindow* window;
         Suspendable SetTitle();
         Suspendable SetPosition();
-        uint64_t id;
 };

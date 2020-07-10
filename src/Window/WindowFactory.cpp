@@ -22,7 +22,7 @@ WindowFactory::~WindowFactory()
 {
 
 }
-WindowFactory::WindowFactory(PolishClient* polish, uint64_t id):polish(polish), id(id)
+WindowFactory::WindowFactory(PolishClient* polish, uint64_t id):PolishObject(polish, id)
 {
 
 }

@@ -12,7 +12,7 @@ $classes = [];
 $files = [];
 foreach($hppfiles as $file) {
     $conts = file_get_contents($file);
-    if(preg_match("@^// HASH (.+)@m", $conts, $matches))
+    if(preg_match("@^// IDENTIFIER (.+)@m", $conts, $matches))
     {
         [$_, $hash] = $matches;
         // TODO namespace
@@ -27,7 +27,7 @@ foreach($hppfiles as $file) {
 ?>
 #include<unordered_map>
 #include<string>
-#include "RootConstructor.hpp"
+#include "Root.hpp"
 <?php
 foreach($files as $file)
 {
@@ -37,7 +37,7 @@ foreach($files as $file)
 }
 ?>
 
-const std::unordered_map<std::string, PolishObject*(*)(PolishClient*,uint64_t)> RootConstructor::constructors = {
+const std::unordered_map<std::string, PolishObject*(*)(PolishClient*,uint64_t)> Root::constructors = {
 <?php
 foreach($hashes as $i => $hash)
 {

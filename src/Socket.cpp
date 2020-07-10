@@ -10,13 +10,14 @@ Socket::Socket(const std::string filename):filename(filename)
 }
 Suspendable Socket::Read(char* output, std::size_t length)
 {
+    std::cout << "Attempting to read " << length << std::endl;
     while(length != 0)
     {
         int fd = open(filename.c_str(), O_RDONLY | O_NONBLOCK);
         if(fd == -1) {
             throw std::runtime_error("Could not open socket for reading");
         }
-        std::size_t received = read(fd, output, length);
+        ssize_t received = read(fd, output, length);
         close(fd);
         if(received == -1) {
             if(errno == EAGAIN) {
@@ -26,7 +27,7 @@ Suspendable Socket::Read(char* output, std::size_t length)
                 throw std::runtime_error("Error " + std::to_string(errno) + " while reading data");
             }
         }
-        // if(received != 0) std::cout << "Read " << received << std::endl;
+        if(received != 0) std::cout << "Read " << received << std::endl;
         output += received; // Advance pointer by received bytes
         length -= received; // Remove needed bytes from length
         SUSPEND();
@@ -41,7 +42,7 @@ Suspendable Socket::Write(const char* data, std::size_t length)
         if(fd == -1) {
             throw std::runtime_error("Could not open socket for reading");
         }
-        std::size_t written = write(fd, data, length);
+        ssize_t written = write(fd, data, length);
         close(fd);
         if(written == -1) {
             if(errno == EAGAIN) {

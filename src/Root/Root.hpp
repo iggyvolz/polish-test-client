@@ -2,14 +2,12 @@
 #include "../PolishObject.hpp"
 #include "../PolishClient.hpp"
 #include <unordered_map>
-class RootConstructor: public PolishObject
+class Root: public PolishObject
 {
     private:
         static const std::unordered_map<std::string, PolishObject*(*)(PolishClient*, uint64_t)> constructors;
-        PolishClient* polish;
-
     public:
         virtual Suspendable Process();
-        RootConstructor(PolishClient* polish);
+        Root(PolishClient* polish, uint64_t id);
         virtual PolishObjectTypes GetType();
 };

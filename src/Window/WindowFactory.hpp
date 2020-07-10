@@ -2,7 +2,7 @@
 #include "../PolishObject.hpp"
 #include <vector>
 #include "../PolishClient.hpp"
-// HASH 015ae42867e6e3b2bae75f0fa3fd11aac0c41e4cd51b3c0dc33383a1f6074a7e
+// IDENTIFIER 6ba849be4a2df9c4b23ca8567fc3dc1cc858b47e704ef16e2d5321feccc885a8
 class Window;
 class WindowFactory: public PolishObject
 {
@@ -13,7 +13,5 @@ class WindowFactory: public PolishObject
         virtual PolishObjectTypes GetType();
     private:
         WindowFactory(PolishClient* polish, uint64_t id);
-        PolishClient* polish;
-        uint64_t id;
         std::vector<Window*> windows;
 };

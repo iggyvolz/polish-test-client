@@ -1,5 +1,4 @@
-php src/RootConstructor/constructorgenerator.php >src/RootConstructor/Constructor.cpp
-php src/ContractChecker/contractsgenerator.php >src/ContractChecker/Contracts.cpp
+php src/Root/constructorgenerator.php >src/Root/Constructor.cpp
 cat Makefile.am.in > Makefile.am
 printf "polish_SOURCES = " >> Makefile.am
 find ./src -type f -regex  '.*\(hpp\|cpp\)$' -exec printf ' '{} \; >> Makefile.am

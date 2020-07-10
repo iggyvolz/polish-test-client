@@ -58,7 +58,7 @@ Suspendable Window::Run()
         SUSPEND();
     }
 }
-Window::Window(PolishClient* polish, unsigned width, unsigned height, uint64_t id):polish(polish), id(id)
+Window::Window(PolishClient* polish, unsigned width, unsigned height, uint64_t id):PolishObject(polish,id)
 {
     window = new sf::RenderWindow(sf::VideoMode(width, height), "SFML works!");
     polish->AddCallback(this->Run());
