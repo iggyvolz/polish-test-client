@@ -16,7 +16,7 @@ struct Suspendable {
         auto initial_suspend() {
             return std::suspend_always{};
         }
-        auto final_suspend() {
+        auto final_suspend() noexcept {
             return std::suspend_always{};
         }
         auto get_return_object() {
